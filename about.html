@@ -1,0 +1,297 @@
+<html lang="zh-CN">
+<head>
+    <meta name="baidu-site-verification" content="codeva-GoGsXK3SLW">
+    <title>公司简介 - 北京愉佚科技发展有限公司</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="北京愉佚科技发展有限公司是专注于技术创新的高新技术企业，提供全方位技术解决方案，推动科技发展与应用。">
+    <meta name="keywords" content="北京愉佚科技, 公司简介, 技术创新, 高新技术企业, 技术解决方案">
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="icon" href="image/logo.png" type="image/png">
+    <script>
+        // 统一Tailwind配置（与index.html一致）
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36BFFA',
+                        dark: '#1D2939',
+                        light: '#F9FAFB',
+                        accent: '#0284C7'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .hover-lift {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .hover-lift:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .gradient-overlay {
+                background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+            }
+        }
+    </style>
+    <!-- 轮播图专属样式 -->
+    <style>
+        #photo-carousel {
+            margin: 4rem 0;
+        }
+        .carousel {
+            position: relative;
+            max-width: 90%;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .carousel-item {
+            min-width: 100%;
+        }
+        .carousel-item img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255,255,255,0.8);
+            color: #165DFF;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        .carousel-btn:hover {
+            background-color: #165DFF;
+            color: white;
+        }
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
+        /* 响应式调整轮播图高度 */
+        @media (max-width: 768px) {
+            .carousel-item img {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light text-dark antialiased">
+    <!-- 顶部通知栏（与index.html一致） -->
+    <div class="bg-primary text-white text-center py-2 text-sm z-50 relative">
+        <p>专业技术服务 · 创新解决方案 · 高效实施支持</p>
+    </div>
+
+    <!-- Wrapper（与index.html结构一致） -->
+    <div id="wrapper" class="min-h-screen flex flex-col">
+
+        <!-- Header - 导航栏（完全复用index.html样式） -->
+        <header id="header" class="sticky top-6 z-40 bg-white/95 backdrop-blur-sm shadow-sm transition-all duration-300">
+            <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <img src="image/logo.png" alt="北京愉佚科技logo" class="h-10 w-auto rounded">
+                    <div>
+                        <strong class="text-xl font-bold text-primary">北京愉佚科技发展有限公司</strong>
+                        <span class="block text-sm text-gray-600">技术服务与创新</span>
+                    </div>
+                </a>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium text-gray-700 hover:text-primary transition-colors">首页</a>
+                    <a href="about.html" class="font-medium text-primary hover:text-accent transition-colors">公司简介</a>
+                    <a href="services.html" class="font-medium text-gray-700 hover:text-primary transition-colors">服务项目</a>
+                    <a href="https://space.bilibili.com/3546822953928942?spm_id_from=333.33.0.0" target="_blank" class="font-medium text-gray-700 hover:text-primary transition-colors">新闻动态</a>
+                    <a href="careers.html" class="font-medium text-gray-700 hover:text-primary transition-colors">招聘信息</a>
+                    <a href="contact.html" class="font-medium text-gray-700 hover:text-primary transition-colors">联系方式</a>
+                    <a href="index_en.html" class="ml-4 px-3 py-1 text-sm border border-primary text-primary rounded hover:bg-primary hover:text-white transition-colors">EN</a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <div class="flex items-center md:hidden">
+                    <a href="index_en.html" class="mr-4 px-3 py-1 text-sm border border-primary text-primary rounded hover:bg-primary hover:text-white transition-colors">EN</a>
+                    <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+                        <i class="fa fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 移动端菜单 -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white border-t z-50 absolute w-full left-0">
+                <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                    <a href="index.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">首页</a>
+                    <a href="about.html" class="py-2 font-medium text-primary hover:text-accent transition-colors">公司简介</a>
+                    <a href="services.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">服务项目</a>
+                    <a href="https://space.bilibili.com/3546822953928942?spm_id_from=333.33.0.0" target="_blank" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">新闻动态</a>
+                    <a href="careers.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">招聘信息</a>
+                    <a href="contact.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">联系方式</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main - 主要内容区域（调整为简介+轮播结构） -->
+        <div id="main" class="flex-grow relative z-20 bg-light">
+            <!-- 公司简介文字区域 -->
+            <section class="py-16 bg-white relative z-20">
+                <div class="container mx-auto px-4">
+                    <div class="max-w-4xl mx-auto">
+                        <header class="mb-10 text-center">
+                            <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4">公司简介</h2>
+                            <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+                        </header>
+                        <div class="prose prose-lg max-w-none text-gray-700 space-y-4">
+                            <p>北京愉佚科技发展有限公司是一家专注于技术创新和优质服务的高新技术企业。我们深耕科技推广和应用服务领域，以“技术驱动、服务至上”为核心理念，致力于为各行业客户提供全方位、定制化的技术解决方案。</p>
+                            <p>自成立以来，公司始终紧跟前沿科技发展趋势，在数字化转型、智能应用、系统集成等领域积累了丰富的实践经验。我们的团队由一批技术精湛、经验丰富的专业人才组成，能够快速响应客户需求，从需求分析、方案设计到项目实施、售后支持，提供全流程闭环服务。</p>
+                            <p>我们坚持以客户价值为导向，通过持续的技术创新和服务优化，帮助客户降本增效、提升核心竞争力，已为众多企业提供了稳定可靠的技术支持，赢得了客户的广泛认可和信赖。未来，愉佚科技将继续秉承创新精神，为推动行业科技进步和企业数字化发展贡献力量。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 图片轮播区域（保留原图片资源，优化样式） -->
+            <section id="photo-carousel" class="py-8 bg-gray-50 relative z-20">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-10">
+                        <h3 class="text-[clamp(1.5rem,2vw,2rem)] font-bold text-dark mb-2">探索愉佚科技</h3>
+                        <p class="text-gray-600">走进我们的工作场景与项目实践</p>
+                    </div>
+                    <div class="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo1.webp" alt="愉佚科技工作场景1">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo2.webp" alt="愉佚科技工作场景2">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo3.webp" alt="愉佚科技项目实践3">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo4.webp" alt="愉佚科技项目实践4">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo5.webp" alt="愉佚科技团队活动5">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo6.webp" alt="愉佚科技团队活动6">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo7.webp" alt="愉佚科技技术交流7">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo8.webp" alt="愉佚科技技术交流8">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo9.webp" alt="愉佚科技客户合作9">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo10.webp" alt="愉佚科技客户合作10">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo11.webp" alt="愉佚科技办公环境11">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo12.webp" alt="愉佚科技办公环境12">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo13.webp" alt="愉佚科技荣誉资质13">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo14.webp" alt="愉佚科技荣誉资质14">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo15.webp" alt="愉佚科技行业展会15">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo16.webp" alt="愉佚科技行业展会16">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo17.webp" alt="愉佚科技产品展示17">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/introduce/photo18.webp" alt="愉佚科技产品展示18">
+                            </div>
+                        </div>
+                        <!-- 轮播按钮（优化样式与交互） -->
+                        <button class="carousel-btn prev-btn" onclick="moveSlide(-1)">
+                            <i class="fa fa-angle-left text-xl"></i>
+                        </button>
+                        <button class="carousel-btn next-btn" onclick="moveSlide(1)">
+                            <i class="fa fa-angle-right text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 联系引导区域（复用index.html的联系模块） -->
+            <section id="two" class="py-20 bg-gradient-to-r from-primary to-accent text-white relative z-20">
+                <div class="container mx-auto px-4 text-center relative z-30">
+                    <header class="major mb-10">
+                        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold">了解更多，与我们合作</h2>
+                    </header>
+                    <p class="text-white/90 text-lg max-w-2xl mx-auto mb-8">
+                        我们期待与您深入沟通，根据您的需求定制专属技术解决方案，共同推动业务发展。
+                    </p>
+                    <ul class="actions justify-center">
+                        <li><a href="contact.html" class="px-8 py-3 bg-white text-primary rounded-lg font-medium hover:bg-gray-100 transition-all shadow-lg relative z-40">
+                            联系我们
+                        </a></li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Footer - 完全复用index.html的底部样式 -->
+        <footer id="footer" class="bg-dark text-white pt-16 pb-8 relative z-20">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">北京愉佚科技</h3>
+                        <p class="text-gray-400 mb-4">
+                            致力于科技推广和应用服务业，提供全面的技术支持和服务。
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fa fa-weixin text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fa fa-weibo text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fa fa-linkedin text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div>

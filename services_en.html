@@ -1,0 +1,271 @@
+<html lang="en">
+<head>
+    <meta name="baidu-site-verification" content="codeva-GoGsXK3SLW">
+    <title>Our Services - Beijing Yuyi Technology Development Co., Ltd.</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Beijing Yuyi Technology offers comprehensive tech services including digital transformation, system integration, and technical consulting to empower businesses with professional solutions.">
+    <meta name="keywords" content="Beijing Yuyi Tech, Services, Technical Support, Digital Transformation, System Integration, Technical Consulting">
+    <!-- Tailwind CSS Import -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Import -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="icon" href="image/logo.png" type="image/png">
+    <script>
+        // Unified Tailwind Configuration (Consistent with index.html)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36BFFA',
+                        dark: '#1D2939',
+                        light: '#F9FAFB',
+                        accent: '#0284C7'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .hover-lift {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .hover-lift:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .gradient-overlay {
+                background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+            }
+            .service-icon {
+                transition: all 0.3s ease;
+            }
+            .service-card:hover .service-icon {
+                transform: scale(1.1);
+                color: #165DFF;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light text-dark antialiased">
+    <!-- Top Notification Bar (Consistent with index.html) -->
+    <div class="bg-primary text-white text-center py-2 text-sm z-50 relative">
+        <p>Professional Technical Services · Innovative Solutions · Efficient Implementation Support</p>
+    </div>
+
+    <!-- Wrapper (Same Structure as index.html) -->
+    <div id="wrapper" class="min-h-screen flex flex-col">
+
+        <!-- Header - Navigation Bar (Reuses index.html Style) -->
+        <header id="header" class="sticky top-6 z-40 bg-white/95 backdrop-blur-sm shadow-sm transition-all duration-300">
+            <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+                <a href="index_en.html" class="flex items-center space-x-2">
+                    <img src="image/logo.png" alt="Beijing Yuyi Technology Logo" class="h-10 w-auto rounded">
+                    <div>
+                        <strong class="text-xl font-bold text-primary">Beijing Yuyi Technology</strong>
+                        <span class="block text-sm text-gray-600">Tech Services & Innovation</span>
+                    </div>
+                </a>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index_en.html" class="font-medium text-gray-700 hover:text-primary transition-colors">Home</a>
+                    <a href="about_en.html" class="font-medium text-gray-700 hover:text-primary transition-colors">About Us</a>
+                    <a href="services_en.html" class="font-medium text-primary hover:text-accent transition-colors">Our Services</a>
+                    <a href="https://space.bilibili.com/3546822953928942?spm_id_from=333.33.0.0" target="_blank" class="font-medium text-gray-700 hover:text-primary transition-colors">News & Insights</a>
+                    <a href="careers_en.html" class="font-medium text-gray-700 hover:text-primary transition-colors">Careers</a>
+                    <a href="contact_en.html" class="font-medium text-gray-700 hover:text-primary transition-colors">Contact Us</a>
+                    <a href="services.html" class="ml-4 px-3 py-1 text-sm border border-primary text-primary rounded hover:bg-primary hover:text-white transition-colors">中文</a>
+                </nav>
+                
+                <!-- Mobile Menu Button -->
+                <div class="flex items-center md:hidden">
+                    <a href="services.html" class="mr-4 px-3 py-1 text-sm border border-primary text-primary rounded hover:bg-primary hover:text-white transition-colors">中文</a>
+                    <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+                        <i class="fa fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white border-t z-50 absolute w-full left-0">
+                <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                    <a href="index_en.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">Home</a>
+                    <a href="about_en.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">About Us</a>
+                    <a href="services_en.html" class="py-2 font-medium text-primary hover:text-accent transition-colors">Our Services</a>
+                    <a href="https://space.bilibili.com/3546822953928942?spm_id_from=333.33.0.0" target="_blank" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">News & Insights</a>
+                    <a href="careers_en.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">Careers</a>
+                    <a href="contact_en.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">Contact Us</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Services Banner -->
+        <section id="banner" class="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden z-10">
+            <div class="absolute inset-0 z-0">
+                <img src="https://picsum.photos/id/3/1920/1080" alt="Technical Services Background" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-dark/60"></div>
+            </div>
+            <div class="container mx-auto px-4 z-20 text-center relative">
+                <h1 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-white mb-6 leading-tight text-shadow animate-fade-in">
+                    Our Services
+                </h1>
+                <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-100 mb-8 max-w-3xl mx-auto">
+                    Delivering comprehensive technical solutions to empower businesses in digital transformation and innovative growth
+                </p>
+            </div>
+        </section>
+
+        <!-- Main - Core Content Area -->
+        <div id="main" class="flex-grow relative z-20 bg-light">
+
+            <!-- Services Overview -->
+            <section class="py-16 bg-white relative z-20">
+                <div class="container mx-auto px-4">
+                    <div class="max-w-3xl mx-auto text-center mb-16">
+                        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4">Comprehensive Technical Solutions</h2>
+                        <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+                        <p class="text-gray-600 text-lg">
+                            We provide customized technical services tailored to industry characteristics and business needs,
+                            offering end-to-end support from consulting and planning to implementation.
+                        </p>
+                    </div>
+                    
+                    <!-- Service Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Service 1 -->
+                        <div class="service-card bg-light p-8 rounded-xl shadow-md hover-lift relative z-30">
+                            <div class="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6 mx-auto">
+                                <i class="fa fa-line-chart service-icon text-2xl text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4 text-center">Digital Transformation Consulting</h3>
+                            <p class="text-gray-600">
+                                Combining business status and industry trends, we develop digital transformation strategies to clarify paths,
+                                optimize workflows, and enhance operational efficiency and market competitiveness.
+                            </p>
+                        </div>
+                        
+                        <!-- Service 2 -->
+                        <div class="service-card bg-light p-8 rounded-xl shadow-md hover-lift relative z-30">
+                            <div class="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6 mx-auto">
+                                <i class="fa fa-cogs service-icon text-2xl text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4 text-center">System Integration Services</h3>
+                            <p class="text-gray-600">
+                                We provide hardware and software integration solutions to achieve seamless data exchange and collaboration between systems,
+                                building stable, efficient, and secure enterprise IT architectures.
+                            </p>
+                        </div>
+                        
+                        <!-- Service 3 -->
+                        <div class="service-card bg-light p-8 rounded-xl shadow-md hover-lift relative z-30">
+                            <div class="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6 mx-auto">
+                                <i class="fa fa-mobile service-icon text-2xl text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4 text-center">Mobile App Development</h3>
+                            <p class="text-gray-600">
+                                Custom development of cross-platform mobile applications to meet internal management and external service needs,
+                                enhancing user experience and business expansion capabilities.
+                            </p>
+                        </div>
+                        
+                        <!-- Service 4 -->
+                        <div class="service-card bg-light p-8 rounded-xl shadow-md hover-lift relative z-30">
+                            <div class="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6 mx-auto">
+                                <i class="fa fa-cloud service-icon text-2xl text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4 text-center">Cloud Computing Solutions</h3>
+                            <p class="text-gray-600">
+                                Offering cloud migration, cloud platform setup, and operation services to help enterprises reduce IT infrastructure costs,
+                                improving system flexibility and scalability.
+                            </p>
+                        </div>
+                        
+                        <!-- Service 5 -->
+                        <div class="service-card bg-light p-8 rounded-xl shadow-md hover-lift relative z-30">
+                            <div class="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6 mx-auto">
+                                <i class="fa fa-shield service-icon text-2xl text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4 text-center">Cybersecurity Services</h3>
+                            <p class="text-gray-600">
+                                Providing comprehensive cybersecurity assessment, protection system construction, and security operation services,
+                                ensuring enterprise data security and business continuity.
+                            </p>
+                        </div>
+                        
+                        <!-- Service 6 -->
+                        <div class="service-card bg-light p-8 rounded-xl shadow-md hover-lift relative z-30">
+                            <div class="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6 mx-auto">
+                                <i class="fa fa-database service-icon text-2xl text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4 text-center">Big Data Analytics</h3>
+                            <p class="text-gray-600">
+                                Helping enterprises unlock data value through data analysis and visualization,
+                                providing data-driven insights for business decisions and identifying new commercial opportunities.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Service Process -->
+            <section class="py-16 bg-gray-50 relative z-20">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-16">
+                        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4">Our Service Process</h2>
+                        <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+                        <p class="text-gray-600 max-w-2xl mx-auto">
+                            A standardized service process ensuring efficient project implementation and high-quality delivery
+                        </p>
+                    </div>
+                    
+                    <div class="relative">
+                        <!-- Connection Line - Desktop Only -->
+                        <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-primary/20 transform -translate-x-1/2"></div>
+                        
+                        <div class="space-y-12 relative">
+                            <!-- Process Step 1 -->
+                            <div class="flex flex-col md:flex-row items-center">
+                                <div class="md:w-1/2 md:pr-12 md:text-right mb-6 md:mb-0 md:order-1 order-2">
+                                    <h3 class="text-xl font-bold mb-2 text-dark">Requirement Analysis</h3>
+                                    <p class="text-gray-600">In-depth understanding of client business needs and pain points, conducting comprehensive requirement assessment and analysis</p>
+                                </div>
+                                <div class="md:w-12 flex justify-center relative z-10 order-1">
+                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold">1</div>
+                                </div>
+                                <div class="md:w-1/2 md:pl-12 md:order-2 order-3"></div>
+                            </div>
+                            
+                            <!-- Process Step 2 -->
+                            <div class="flex flex-col md:flex-row items-center">
+                                <div class="md:w-1/2 md:pr-12 md:text-right mb-6 md:mb-0 md:order-1 order-2"></div>
+                                <div class="md:w-12 flex justify-center relative z-10 order-1">
+                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold">2</div>
+                                </div>
+                                <div class="md:w-1/2 md:pl-12 md:order-2 order-3">
+                                    <h3 class="text-xl font-bold mb-2 text-dark">Solution Design</h3>
+                                    <p class="text-gray-600">Developing customized solutions and implementation plans based on requirement analysis results</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Process Step 3 -->
+                            <div class="flex flex-col md:flex-row items-center">
+                                <div class="md:w-1/2 md:pr-12 md:text-right mb-6 md:mb-0 md:order-1 order-2">
+                                    <h3 class="text-xl font-bold mb-2 text-dark">Project Implementation</h3>
+                                    <p class="text-gray-600">Professional team executing projects according to plan, ensuring high-quality delivery and progress control</p>
+                                </div>
+                                <div class="md:w-12 flex justify-center relative z-10 order-1">
+                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold">3</div>
+                                </div>
+                                <div class="md:w-1/
