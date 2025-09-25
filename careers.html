@@ -1,5 +1,4 @@
-<html lang="zh-CN">
-<head>
+<html lang="zh-CN"><head>
     <meta name="baidu-site-verification" content="codeva-GoGsXK3SLW">
     <title>招聘信息 - 北京愉佚科技发展有限公司</title>
     <meta charset="utf-8">
@@ -52,15 +51,15 @@
     </style>
 </head>
 <body class="bg-light text-dark antialiased">
-    <!-- 顶部通知栏（与index.html一致） -->
+    <!-- 顶部通知栏 -->
     <div class="bg-primary text-white text-center py-2 text-sm z-50 relative">
         <p>专业技术服务 · 创新解决方案 · 高效实施支持</p>
     </div>
 
-    <!-- Wrapper（与index.html结构一致） -->
+    <!-- Wrapper -->
     <div id="wrapper" class="min-h-screen flex flex-col">
 
-        <!-- Header - 导航栏（完全复用index.html样式） -->
+        <!-- Header - 导航栏 -->
         <header id="header" class="sticky top-6 z-40 bg-white/95 backdrop-blur-sm shadow-sm transition-all duration-300">
             <div class="container mx-auto px-4 py-3 flex items-center justify-between">
                 <a href="index.html" class="flex items-center space-x-2">
@@ -334,7 +333,7 @@
                 </div>
             </section>
 
-            <!-- 联系引导区域 -->
+            <!-- 联系引导区域（已修复按钮布局问题） -->
             <section id="two" class="py-20 bg-gradient-to-r from-primary to-accent text-white relative z-20">
                 <div class="container mx-auto px-4 text-center relative z-30">
                     <header class="major mb-10">
@@ -343,20 +342,21 @@
                     <p class="text-white/90 text-lg max-w-2xl mx-auto mb-8">
                         如果您对我们的职位感兴趣，或者有任何疑问，请随时联系我们
                     </p>
-                    <ul class="actions justify-center space-x-4">
-                        <li><a href="contact.html" class="px-8 py-3 bg-white text-primary rounded-lg font-medium hover:bg-gray-100 transition-all shadow-lg relative z-40">
+                    <!-- 优化后的按钮区域：确保居中且左右分布均匀 -->
+                    <div class="flex flex-col sm:flex-row justify-center items-center gap-4 max-w-md mx-auto px-4">
+                        <a href="contact.html" class="flex-1 min-w-[180px] px-6 py-3 bg-white text-primary rounded-lg font-medium hover:bg-gray-100 transition-all shadow-lg relative z-40 text-center">
                             联系方式
-                        </a></li>
-                        <li><a href="https://www.zhipin.com/gongsi/5d9b9a3a7faeb5be1HN82Nq9FVA~.html" target="_blank" class="px-8 py-3 bg-transparent border-2 border-white text-white rounded-lg font-medium hover:bg-white/10 transition-all shadow-lg relative z-40">
+                        </a>
+                        <a href="https://www.zhipin.com/gongsi/5d9b9a3a7faeb5be1HN82Nq9FVA~.html" target="_blank" class="flex-1 min-w-[180px] px-6 py-3 bg-transparent border-2 border-white text-white rounded-lg font-medium hover:bg-white/10 transition-all shadow-lg relative z-40 text-center">
                             BOSS直聘
-                        </a></li>
-                    </ul>
+                        </a>
+                    </div>
                 </div>
             </section>
 
         </div>
 
-        <!-- Footer - 完全复用index.html的底部样式 -->
+        <!-- Footer -->
         <footer id="footer" class="bg-dark text-white pt-16 pb-8 relative z-20">
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
@@ -485,7 +485,5 @@
             });
         });
     </script>
-
-</body>
-</html>
+</body></html>
     
