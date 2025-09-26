@@ -217,20 +217,22 @@
                             </ul>
                         </div>
 
-                        <!-- 地图区域 -->
-                        <div class="bg-white p-8 rounded-xl shadow-md hover-lift relative z-30">
-                            <h2 class="text-2xl font-bold text-dark mb-6 flex items-center">
-                                <i class="fa fa-map text-primary mr-3"></i>
-                                公司位置
-                            </h2>
-                            <div class="rounded-lg overflow-hidden h-80 bg-gray-100 relative">
-                                <!-- 这里可以嵌入实际地图，此处使用占位图 -->
-                                <img src="https://picsum.photos/id/101/800/600" alt="公司位置地图" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 flex items-center justify-center bg-dark/20 hover:bg-dark/10 transition-colors">
-                                    <span class="text-white font-medium px-4 py-2 rounded-lg bg-primary/90">点击查看完整地图</span>
-                                </div>
-                            </div>
-                        </div>
+<!-- 地图区域（修改后） -->
+<div class="bg-white p-8 rounded-xl shadow-md hover-lift relative z-30">
+    <h2 class="text-2xl font-bold text-dark mb-6 flex items-center">
+        <i class="fa fa-map text-primary mr-3"></i>
+        公司位置
+    </h2>
+    <div class="rounded-lg overflow-hidden h-80 bg-gray-100 relative">
+        <!-- 嵌入高德地图链接，点击整个地图区域均可跳转 -->
+        <a href="https://ditu.amap.com/place/B0FFHGOP2U" target="_blank" rel="noopener noreferrer">
+            <img src="https://picsum.photos/id/101/800/600" alt="公司位置地图" class="w-full h-full object-cover">
+            <div class="absolute inset-0 flex items-center justify-center bg-dark/20 hover:bg-dark/10 transition-colors">
+                <span class="text-white font-medium px-4 py-2 rounded-lg bg-primary/90">点击查看完整地图</span>
+            </div>
+        </a>
+    </div>
+</div>
 
                         <!-- 社交媒体链接 -->
                         <div class="bg-white p-8 rounded-xl shadow-md hover-lift relative z-30">
