@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name="baidu-site-verification" content="codeva-GoGsXK3SLW">
+    <title>零售业大数据分析案例 - 北京愉佚科技发展有限公司</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="北京愉佚科技为中小型连锁零售企业提供大数据分析解决方案，实现精准营销与库存优化，提升销售额18%。">
+    <meta name="keywords" content="零售业大数据, 连锁超市数据分析, 精准营销方案, 库存优化系统, 中小企业零售方案">
+    <!-- 引入Tailwind CSS -->
+    <link href="dist/tailwind.css" rel="stylesheet">
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="icon" href="image/logo.png" type="image/png">
+    <script>
+        // Tailwind配置
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36BFFA',
+                        dark: '#1D2939',
+                        light: '#F9FAFB',
+                        accent: '#0284C7',
+                        retail: '#F97316' // 零售业主题色-橙色系
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .hover-lift {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .hover-lift:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .timeline-dot::before {
+                content: '';
+                position: absolute;
+                left: -9px;
+                top: 5px;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: #F97316;
+                border: 4px solid white;
+                box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2);
+            }
+            .badge {
+                @apply inline-block px-2 py-1 text-xs font-semibold rounded-full;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light text-dark antialiased">
+    <!-- 顶部通知栏 -->
+    <div class="bg-primary text-white text-center py-2 text-sm z-50 relative">
+        <p>专业技术服务 · 创新解决方案 · 高效实施支持</p>
+    </div>
+
+    <!-- Wrapper -->
+    <div id="wrapper" class="min-h-screen flex flex-col">
+
+        <!-- Header - 导航栏 -->
+        <header id="header" class="sticky top-0 z-40 bg-white/95 backdrop-blur-sm shadow-sm transition-all duration-300">
+            <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <img src="image/logo.png" alt="北京愉佚科技logo" class="h-10 w-auto rounded">
+                    <div>
+                        <strong class="text-xl font-bold text-primary">北京愉佚科技发展有限公司</strong>
+                        <span class="block text-sm text-gray-600">技术服务与创新</span>
+                    </div>
+                </a>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium text-gray-700 hover:text-primary transition-colors">首页</a>
+                    <a href="about.html" class="font-medium text-gray-700 hover:text-primary transition-colors">公司简介</a>
+                    <a href="services.html" class="font-medium text-primary hover:text-accent transition-colors">服务项目</a>
+                    <a href="https://space.bilibili.com/3546822953928942?spm_id_from=333.33.0.0" target="_blank" class="font-medium text-gray-700 hover:text-primary transition-colors">新闻动态</a>
+                    <a href="careers.html" class="font-medium text-gray-700 hover:text-primary transition-colors">招聘信息</a>
+                    <a href="contact.html" class="font-medium text-gray-700 hover:text-primary transition-colors">联系方式</a>
+                    <a href="index_en.html" class="ml-4 px-3 py-1 text-sm border border-primary text-primary rounded hover:bg-primary hover:text-white transition-colors">EN</a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <div class="flex items-center md:hidden">
+                    <a href="index_en.html" class="mr-4 px-3 py-1 text-sm border border-primary text-primary rounded hover:bg-primary hover:text-white transition-colors">EN</a>
+                    <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+                        <i class="fa fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 移动端菜单 -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white border-t z-50 absolute w-full left-0">
+                <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                    <a href="index.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">首页</a>
+                    <a href="about.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">公司简介</a>
+                    <a href="services.html" class="py-2 font-medium text-primary hover:text-accent transition-colors">服务项目</a>
+                    <a href="https://space.bilibili.com/3546822953928942?spm_id_from=333.33.0.0" target="_blank" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">新闻动态</a>
+                    <a href="careers.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">招聘信息</a>
+                    <a href="contact.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">联系方式</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- 案例Banner -->
+        <section id="case-banner" class="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden z-10">
+            <div class="absolute inset-0 z-0">
+                <img src="https://picsum.photos/id/42/1920/1080" alt="零售业大数据分析案例背景" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-retail/70"></div>
+            </div>
+            <div class="container mx-auto px-4 z-20 relative">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between">
+                    <div>
+                        <h1 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-white mb-4 leading-tight text-shadow">
+                            中小型连锁零售大数据分析平台
+                        </h1>
+                        <div class="flex flex-wrap items-center gap-4 text-white/90">
+                            <span><i class="fa fa-shopping-bag mr-2"></i> 连锁超市/便利店</span>
+                            <span><i class="fa fa-calendar mr-2"></i> 项目周期：2个月</span>
+                            <span><i class="fa fa-map-marker mr-2"></i> 江苏 · 苏州</span>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="mt-6 md:mt-0 px-6 py-2 bg-white text-retail rounded-lg font-medium hover:bg-gray-100 transition-colors shadow-lg">
+                        咨询类似方案
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main - 案例详情内容 -->
+        <div id="main" class="flex-grow relative z-20 bg-light py-12">
+            <div class="container mx-auto px-4">
+                <!-- 面包屑导航 -->
+                <div class="text-sm text-gray-500 mb-8">
+                    <a href="index.html" class="hover:text-primary transition-colors">首页</a>
+                    <i class="fa fa-angle-right mx-2"></i>
+                    <a href="services.html" class="hover:text-primary transition-colors">服务项目</a>
+                    <i class="fa fa-angle-right mx-2"></i>
+                    <a href="services.html#cases" class="hover:text-primary transition-colors">成功案例</a>
+                    <i class="fa fa-angle-right mx-2"></i>
+                    <span class="text-primary">零售业大数据分析</span>
+                </div>
+
+                <!-- 案例核心数据 -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 bg-white p-8 rounded-xl shadow-sm">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-retail mb-2">18%<i class="fa fa-arrow-up text-green-500 ml-1"></i></div>
+                        <p class="text-gray-600">销售额提升</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-retail mb-2">23%<i class="fa fa-arrow-down text-red-500 ml-1"></i></div>
+                        <p class="text-gray-600">库存积压减少</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-retail mb-2">32%<i class="fa fa-arrow-up text-green-500 ml-1"></i></div>
+                        <p class="text-gray-600">营销转化率提升</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-retail mb-2">40%<i class="fa fa-arrow-down text-red-500 ml-1"></i></div>
+                        <p class="text-gray-600">滞销品识别时间</p>
+                    </div>
+                </div>
+
+                <!-- 项目背景与痛点 -->
+                <section class="mb-16">
+                    <h2 class="text-2xl font-bold mb-6 text-dark flex items-center">
+                        <i class="fa fa-exclamation-circle text-retail mr-3"></i>项目背景与核心痛点
+                    </h2>
+                    <div class="bg-white p-8 rounded-xl shadow-sm">
+                        <p class="text-gray-600 mb-6">
+                            客户是苏州一家连锁零售企业，拥有15家社区超市和便利店，主要经营日用百货、生鲜食品等，年销售额约8000万元。随着市场竞争加剧，企业面临客流增长缓慢、库存周转效率低、营销活动效果不佳等问题。
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                            <div class="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                                <h3 class="font-bold mb-4 text-dark flex items-center">
+                                    <i class="fa fa-shopping-cart text-retail mr-2"></i>运营痛点
+                                </h3>
+                                <ul class="text-gray-600 space-y-3">
+                                    <li class="flex items-start">
+                                        <i class="fa fa-times-circle text-red-500 mt-1 mr-3"></i>
+                                        <span>采购依赖经验判断，部分商品经常缺货或积压</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-times-circle text-red-500 mt-1 mr-3"></i>
+                                        <span>营销活动"一刀切"，缺乏针对性，投入产出比低</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-times-circle text-red-500 mt-1 mr-3"></i>
+                                        <span>门店销售数据需人工汇总，分析滞后3-5天</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-times-circle text-red-500 mt-1 mr-3"></i>
+                                        <span>会员管理粗放，无法有效识别高价值客户并提供个性化服务</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                                <h3 class="font-bold mb-4 text-dark flex items-center">
+                                    <i class="fa fa-lightbulb-o text-retail mr-2"></i>中小企业特殊需求
+                                </h3>
+                                <ul class="text-gray-600 space-y-3">
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                        <span>系统部署成本低，避免大额前期投入</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                        <span>操作简单，无需专业数据分析师也能使用</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                        <span>能与现有收银系统快速对接，无需更换硬件</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                        <span>实施周期短，快速见效，降低转型风险</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 解决方案 -->
+                <section class="mb-16">
+                    <h2 class="text-2xl font-bold mb-6 text-dark flex items-center">
+                        <i class="fa fa-lightbulb-o text-retail mr-3"></i>定制化解决方案
+                    </h2>
+                    <div class="bg-white p-8 rounded-xl shadow-sm">
+                        <p class="text-gray-600 mb-8">
+                            针对中小型零售企业特点，我们提供轻量化云原生大数据分析平台，无需大量硬件投资，可与现有收银系统快速对接，通过模块化设计满足核心需求，让企业以最小投入实现数据驱动决策。
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                            <!-- 方案模块1：销售分析与预测 -->
+                            <div class="hover-lift p-6 border border-gray-100 rounded-lg">
+                                <div class="w-12 h-12 bg-retail/10 rounded-lg flex items-center justify-center mb-4">
+                                    <i class="fa fa-line-chart text-xl text-retail"></i>
+                                </div>
+                                <h3 class="font-bold text-lg mb-3 text-dark">销售分析与预测</h3>
+                                <ul class="text-gray-600 space-y-2 text-sm">
+                                    <li>• 各门店、品类销售数据实时监控</li>
+                                    <li>• 基于历史数据的销量预测模型</li>
+                                    <li>• 销售异常自动预警</li>
+                                    <li>• 简易操作的可视化报表</li>
+                                </ul>
+                            </div>
+
+                            <!-- 方案模块2：智能库存管理 -->
+                            <div class="hover-lift p-6 border border-gray-100 rounded-lg">
+                                <div class="w-12 h-12 bg-retail/10 rounded-lg flex items-center justify-center mb-4">
+                                    <i class="fa fa-cubes text-xl text-retail"></i>
+                                </div>
+                                <h3 class="font-bold text-lg mb-3 text-dark">智能库存管理</h3>
+                                <ul class="text-gray-600 space-y-2 text-sm">
+                                    <li>• 自动生成补货建议</li>
+                                    <li>• 滞销品识别与促销建议</li>
+                                    <li>• 库存周转效率分析</li>
+                                    <li>• 减少缺货与积压预警</li>
+                                </ul>
+                            </div>
+
+                            <!-- 方案模块3：会员画像与精准营销 -->
+                            <div class="hover-lift p-6 border border-gray-100 rounded-lg">
+                                <div class="w-12 h-12 bg-retail/10 rounded-lg flex items-center justify-center mb-4">
+                                    <i class="fa fa-users text-xl text-retail"></i>
+                                </div>
+                                <h3 class="font-bold text-lg mb-3 text-dark">会员画像与精准营销</h3>
+                                <ul class="text-gray-600 space-y-2 text-sm">
+                                    <li>• 会员消费行为分析与标签化</li>
+                                    <li>• 个性化促销方案推荐</li>
+                                    <li>• 营销活动效果追踪</li>
+                                    <li>• 会员流失预警</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- 系统架构图 -->
+                        <div class="bg-gray-50 p-6 rounded-lg border border-gray-100 mb-8">
+                            <h3 class="font-bold text-lg mb-4 text-dark text-center">平台架构图</h3>
+                            <div class="flex justify-center">
+                                <img src="https://picsum.photos/id/180/1000/300" alt="零售大数据分析平台架构图" class="max-w-full h-auto rounded shadow-sm">
+                            </div>
+                            <p class="text-center text-sm text-gray-500 mt-4">轻量化云原生架构，与现有系统无缝对接，降低部署难度</p>
+                        </div>
+
+                        <!-- 实施步骤 -->
+                        <div>
+                            <h3 class="font-bold text-lg mb-6 text-dark">快速实施流程</h3>
+                            <div class="relative">
+                                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-retail/20"></div>
+                                <div class="space-y-8 relative">
+                                    <div class="pl-12 relative timeline-dot">
+                                        <h4 class="font-bold text-retail">第一阶段：数据对接（2周）</h4>
+                                        <p class="text-gray-600 mt-2">通过标准化接口与现有收银系统、会员系统对接，无需更换硬件，不影响正常营业。</p>
+                                    </div>
+                                    <div class="pl-12 relative timeline-dot">
+                                        <h4 class="font-bold text-retail">第二阶段：平台配置（2周）</h4>
+                                        <p class="text-gray-600 mt-2">根据企业商品分类、促销模式等特点配置分析模型，导入历史数据进行初始化。</p>
+                                    </div>
+                                    <div class="pl-12 relative timeline-dot">
+                                        <h4 class="font-bold text-retail">第三阶段：培训与上线（2周）</h4>
+                                        <p class="text-gray-600 mt-2">对管理人员和门店员工进行操作培训，系统试运行并优化，最终全面上线使用。</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 中小企业优势 -->
+                            <div class="mt-10 bg-blue-50 p-5 rounded-lg border border-blue-100">
+                                <h4 class="font-bold text-primary flex items-center mb-3">
+                                    <i class="fa fa-star mr-2"></i>中小企业专属优势
+                                </h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div class="flex items-start">
+                                        <div class="badge bg-green-100 text-green-800 mr-3 mt-0.5">低成本</div>
+                                        <span class="text-gray-700 text-sm">采用SaaS模式，按门店数量付费，初期投入降低70%</span>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="badge bg-blue-100 text-blue-800 mr-3 mt-0.5">易操作</div>
+                                        <span class="text-gray-700 text-sm">可视化操作界面，30分钟即可学会基本操作</span>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="badge bg-purple-100 text-purple-800 mr-3 mt-0.5">快速部署</div>
+                                        <span class="text-gray-700 text-sm">标准化接口，2周内完成与现有系统对接</span>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="badge bg-yellow-100 text-yellow-800 mr-3 mt-0.5">可扩展</div>
+                                        <span class="text-gray-700 text-sm">随业务增长可灵活增加功能模块，无需重构系统</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 实施效果 -->
+                <section class="mb-16">
+                    <h2 class="text-2xl font-bold mb-6 text-dark flex items-center">
+                        <i class="fa fa-line-chart text-retail mr-3"></i>项目实施效果
+                    </h2>
+                    <div class="bg-white p-8 rounded-xl shadow-sm">
+                        <!-- 效果概览卡片 -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                            <div class="border border-gray-100 rounded-lg p-6 hover-lift">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                                        <i class="fa fa-money text-green-600"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg">销售业绩</h3>
+                                </div>
+                                <p class="text-3xl font-bold text-retail mb-2">+18%</p>
+                                <p class="text-gray-600 text-sm">整体销售额提升</p>
+                            </div>
+                            <div class="border border-gray-100 rounded-lg p-6 hover-lift">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                        <i class="fa fa-cubes text-blue-600"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg">库存周转</h3>
+                                </div>
+                                <p class="text-3xl font-bold text-retail mb-2">+27%</p>
+                                <p class="text-gray-600 text-sm">库存周转效率提升</p>
+                            </div>
+                            <div class="border border-gray-100 rounded-lg p-6 hover-lift">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-3">
+                                        <i class="fa fa-percent text-purple-600"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg">营销效率</h3>
+                                </div>
+                                <p class="text-3xl font-bold text-retail mb-2">+32%</p>
+                                <p class="text-gray-600 text-sm">营销活动转化率</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                            <!-- 精准营销效果 -->
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="font-bold text-lg mb-2 text-dark flex items-center">
+                                        <i class="fa fa-bullhorn text-retail mr-2"></i>精准营销成效
+                                    </h3>
+                                    <p class="text-gray-600">
+                                        通过会员消费行为分析，实现了营销活动的精准推送。针对不同消费偏好的客户群体推送个性化优惠，显著提升了营销转化率和客户复购率。
+                                    </p>
+                                </div>
+                                
+                                <div class="rounded-lg overflow-hidden shadow-sm">
+                                    <img src="https://picsum.photos/id/26/600/400" alt="精准营销效果对比图表" class="w-full h-auto">
+                                </div>
+                                
+                                <div class="bg-gray-50 p-5 rounded-lg border border-gray-100">
+                                    <div class="flex items-start">
+                                        <i class="fa fa-quote-left text-retail/30 text-3xl mt-1 mr-4"></i>
+                                        <div>
+                                            <p class="text-gray-600 italic">
+                                                "以前我们做促销就是'一刀切'，现在通过系统能清楚看到不同顾客的偏好，推送的优惠券使用率提高了3倍多，营销费用反而降低了15%。"
+                                            </p>
+                                            <p class="text-right text-sm font-medium mt-3 text-retail">— 客户营销经理</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 库存优化效果 -->
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="font-bold text-lg mb-2 text-dark flex items-center">
+                                        <i class="fa fa-cubes text-retail mr-2"></i>库存优化成效
+                                    </h3>
+                                    <p class="text-gray-600">
+                                        智能库存管理系统通过销售数据预测，自动生成补货建议，有效减少了缺货和积压情况，提高了库存周转效率，降低了资金占用成本。
+                                    </p>
+                                </div>
+                                
+                                <!-- 效率提升进度条 -->
+                                <div class="bg-gray-50 p-6 rounded-lg border border-gray-100 space-y-6">
+                                    <div>
+                                        <div class="flex justify-between mb-2">
+                                            <span class="font-medium text-gray-700">库存积压金额</span>
+                                            <span class="font-medium text-retail">减少23%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-3">
+                                            <div class="bg-retail h-3 rounded-full" style="width: 23%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="flex justify-between mb-2">
+                                            <span class="font-medium text-gray-700">商品缺货率</span>
+                                            <span class="font-medium text-retail">降低35%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-3">
+                                            <div class="bg-retail h-3 rounded-full" style="width: 35%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="flex justify-between mb-2">
+                                            <span class="font-medium text-gray-700">库存周转天数</span>
+                                            <span class="font-medium text-retail">减少27%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-3">
+                                            <div class="bg-retail h-3 rounded-full" style="width: 27%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="flex justify-between mb-2">
+                                            <span class="font-medium text-gray-700">滞销品处理效率</span>
+                                            <span class="font-medium text-retail">提升40%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-3">
+                                            <div class="bg-retail h-3 rounded-full" style="width: 40%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 典型案例 -->
+                                <div class="border border-gray-100 rounded-lg overflow-hidden">
+                                    <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                                        <h4 class="font-bold text-gray-800">典型品类优化案例：休闲食品</h4>
+                                    </div>
+                                    <div class="p-6">
+                                        <ul class="text-gray-600 space-y-3">
+                                            <li class="flex items-start">
+                                                <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                                <span>通过销售数据分析，调整了12种零食的采购量，减少积压库存8.5万元</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                                <span>根据消费时段分析，优化了补货时间，缺货率从18%降至7%</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                                <span>针对不同门店的消费偏好，实现差异化备货，整体销售额提升24%</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 客户评价 -->
+                <section class="mb-16">
+                    <h2 class="text-2xl font-bold mb-6 text-dark flex items-center">
+                        <i class="fa fa-comments text-retail mr-3"></i>客户评价
+                    </h2>
+                    <div class="bg-white p-8 rounded-xl shadow-sm">
+                        <div class="flex flex-col md:flex-row items-center">
+                            <div class="w-24 h-24 rounded-full overflow-hidden mb-6 md:mb-0 md:mr-8 border-4 border-gray-100">
+                                <img src="https://picsum.photos/id/1025/200/200" alt="零售企业负责人照片" class="w-full h-full object-cover">
+                            </div>
+                            <div class="text-center md:text-left max-w-2xl">
+                                <div class="flex justify-center md:justify-start text-yellow-400 mb-3">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <p class="text-gray-600 mb-4 italic">
+                                    "作为中小型零售企业，我们一直想做数据分析但苦于成本高、技术复杂。愉佚科技的解决方案完全符合我们的需求，不仅投入小，而且操作简单，门店经理也能轻松上手。实施后，我们的库存周转明显加快，营销活动也更有针对性，不到半年就收回了投资成本。"
+                                </p>
+                                <h4 class="font-bold text-dark">王总 · 客户零售企业总经理</h4>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 相关案例推荐 -->
+                <section>
+                    <h2 class="text-2xl font-bold mb-6 text-dark flex items-center">
+                        <i class="fa fa-th-large text-retail mr-3"></i>相关案例推荐
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- 相关案例1 -->
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover-lift">
+                            <div class="h-48 overflow-hidden">
+                                <img src="https://picsum.photos/id/26/800/600" alt="制造业数字化转型案例" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2 text-dark">制造业数字化转型</h3>
+                                <p class="text-gray-600 mb-4">为大型制造企业提供全面数字化转型解决方案，提升生产效率30%</p>
+                                <a href="case-manufacture.html" class="text-primary font-medium hover:text-accent transition-colors flex items-center">
+                                    查看详情 <i class="fa fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- 相关案例2 -->
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover-lift">
+                            <div class="h-48 overflow-hidden">
+                                <img src="https://picsum.photos/id/180/800/600" alt="金融行业系统集成案例" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2 text-dark">金融行业系统集成</h3>
+                                <p class="text-gray-600 mb-4">为区域性银行提供系统集成服务，实现核心业务系统与数字渠道无缝对接</p>
+                                <a href="case-finance.html" class="text-primary font-medium hover:text-accent transition-colors flex items-center">
+                                    查看详情 <i class="fa fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- 相关案例3 -->
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover-lift">
+                            <div class="h-48 overflow-hidden">
+                                <img src="https://picsum.photos/id/99/800/600" alt="保险行业数据整合案例" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2 text-dark">保险行业数据整合</h3>
+                                <p class="text-gray-600 mb-4">为财险公司构建客户数据平台，实现业务数据统一管理与分析</p>
+                                <a href="case-insurance.html" class="text-primary font-medium hover:text-accent transition-colors flex items-center">
+                                    查看详情 <i class="fa fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 咨询区域 -->
+                <section class="mt-16 bg-gradient-to-r from-retail to-orange-500 text-white p-8 rounded-xl shadow-md">
+                    <div class="max-w-3xl mx-auto text-center">
+                        <h2 class="text-2xl font-bold mb-4">需要零售数据分析方案？</h2>
+                        <p class="mb-8 opacity-90">我们为中小型零售企业提供低成本、易操作的大数据分析平台</p>
+                        <a href="contact.html" class="inline-block px-8 py-3 bg-white text-retail rounded-lg font-medium hover:bg-gray-100 transition-all shadow-lg">
+                            咨询零售行业专家
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer id="footer" class="bg-dark text-white pt-16 pb-8 relative z-20">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">北京愉佚科技</h3>
+                        <p class="text-gray-400 mb-4">
+                            致力于科技推广和应用服务业，提供全面的技术支持和服务。
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fa fa-weixin text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fa fa-weibo text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fa fa-linkedin text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">快速链接</h3>
+                        <ul class="space-y-2">
+                            <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">首页</a></li>
+                            <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">公司简介</a></li>
+                            <li><a href="services.html" class="text-gray-400 hover:text-white transition-colors">服务项目</a></li>
+                            <li><a href="careers.html" class="text-gray-400 hover:text-white transition-colors">招聘信息</a></li>
+                            <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors">联系方式</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">联系我们</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-start">
+                                <i class="fa fa-map-marker mt-1 mr-3 text-gray-400"></i>
+                                <span class="text-gray-400">北京市朝阳区科技园区88号</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-phone mr-3 text-gray-400"></i>
+                                <span class="text-gray-400">010-82721226</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-envelope mr-3 text-gray-400"></i>
+                                <span class="text-gray-400">contact@pleasantteches.com</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">订阅资讯</h3>
+                        <p class="text-gray-400 mb-4">订阅我们的新闻资讯，了解最新动态</p>
+                        <form class="flex relative z-30">
+                            <input type="email" placeholder="您的邮箱地址" class="px-4 py-2 rounded-l-lg w-full focus:outline-none text-dark shadow-sm">
+                            <button type="submit" class="bg-primary hover:bg-primary/90 px-4 py-2 rounded-r-lg transition-colors shadow-sm">
+                                <i class="fa fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+                    <ul class="copyright">
+                        <li>© 北京愉佚科技发展有限公司 2025</li>
+                        <li class="mt-1">© PleasantTech Ventures Co., Ltd. 2025</li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // 移动端菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            const topNotice = document.querySelector('.bg-primary.text-white');
+            const topNoticeHeight = topNotice ? topNotice.offsetHeight : 0;
+
+            header.style.top = topNoticeHeight + 'px';
+
+            if (window.scrollY > topNoticeHeight) {
+                header.style.top = '0';
+                header.classList.add('py-2', 'shadow');
+                header.classList.remove('py-3');
+            } else {
+                header.classList.add('py-3');
+                header.classList.remove('py-2', 'shadow');
+            }
+        });
+
+        // 页面加载时触发滚动事件
+        window.addEventListener('load', function() {
+            window.dispatchEvent(new Event('scroll'));
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+
+        // 页面元素淡入动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('section > div.bg-white, section > div.grid');
+            fadeElements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 100 + (index * 100));
+            });
+        });
+    </script>
+
+</body>
+</html>
+    
