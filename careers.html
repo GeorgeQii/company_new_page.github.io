@@ -60,7 +60,7 @@
     <div id="wrapper" class="min-h-screen flex flex-col">
 
         <!-- Header - 导航栏 -->
-        <header id="header" class="sticky top-6 z-40 bg-white/95 backdrop-blur-sm shadow-sm transition-all duration-300">
+        <header id="header" class="sticky top-0 z-40 bg-white/95 backdrop-blur-sm shadow-sm transition-all duration-300">
             <div class="container mx-auto px-4 py-3 flex items-center justify-between">
                 <a href="index.html" class="flex items-center space-x-2">
                     <img src="image/logo.png" alt="北京愉佚科技logo" class="h-10 w-auto rounded">
@@ -438,17 +438,25 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // 滚动时改变导航栏样式
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.classList.add('py-2', 'shadow');
-                header.classList.remove('py-3');
-            } else {
-                header.classList.add('py-3');
-                header.classList.remove('py-2', 'shadow');
-            }
-        });
+// 滚动时改变导航栏样式（修复吸附问题）
+window.addEventListener('scroll', function() {
+    const header = document.getElementById('header');
+    const topNotice = document.querySelector('.bg-primary.text-white'); // 顶部通知栏
+    const topNoticeHeight = topNotice ? topNotice.offsetHeight : 0; // 通知栏高度
+
+    // 初始状态：导航栏在通知栏下方
+    header.style.top = topNoticeHeight + 'px';
+
+    // 滚动超过通知栏后，导航栏吸附顶端
+    if (window.scrollY > topNoticeHeight) {
+        header.style.top = '0';
+        header.classList.add('py-2', 'shadow');
+        header.classList.remove('py-3');
+    } else {
+        header.classList.add('py-3');
+        header.classList.remove('py-2', 'shadow');
+    }
+});
 
         // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
