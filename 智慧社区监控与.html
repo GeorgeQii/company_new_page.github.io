@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name="baidu-site-verification" content="codeva-GoGsXK3SLW">
+    <title>智慧社区监控与综合布线解决方案 - 北京愉佚科技</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="北京愉佚科技提供智慧社区监控与综合布线解决方案，实现社区安全智能化管理，提升居民生活品质与安全感。">
+    <meta name="keywords" content="智慧社区, 社区监控系统, 综合布线方案, 智能安防系统">
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="icon" href="image/logo.png" type="image/png">
+    <script>
+        // Tailwind配置
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36BFFA',
+                        dark: '#1D2939',
+                        light: '#F9FAFB',
+                        accent: '#0284C7',
+                        security: '#1E40AF' // 安防主题色
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .hover-lift {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .hover-lift:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .line-indicator::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 4px;
+                background-color: #165DFF;
+            }
+            .camera-pulse {
+                animation: pulse 2s infinite;
+            }
+            @keyframes pulse {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(22, 93, 255, 0.4);
+                }
+                70% {
+                    box-shadow: 0 0 0 10px rgba(22, 93, 255, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(22, 93, 255, 0);
+                }
+            }
+        }
+    </style>
+</head>
+<body class="bg-light text-dark antialiased">
+    <!-- 顶部通知栏 -->
+    <div class="bg-primary text-white text-center py-2 text-sm z-50 relative">
+        <p>专业技术服务 · 创新解决方案 · 高效实施支持</p>
+    </div>
+
+    <!-- Wrapper -->
+    <div id="wrapper" class="min-h-screen flex flex-col">
+
+        <!-- Header - 导航栏 -->
+        <header id="header" class="sticky top-0 z-40 bg-white/95 backdrop-blur-sm shadow-sm transition-all duration-300">
+            <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <img src="image/logo.png" alt="北京愉佚科技logo" class="h-10 w-auto rounded">
+                    <div>
+                        <strong class="text-xl font-bold text-primary">北京愉佚科技发展有限公司</strong>
+                        <span class="block text-sm text-gray-600">技术服务与创新</span>
+                    </div>
+                </a>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium text-gray-700 hover:text-primary transition-colors">首页</a>
+                    <a href="about.html" class="font-medium text-gray-700 hover:text-primary transition-colors">公司简介</a>
+                    <a href="services.html" class="font-medium text-primary hover:text-accent transition-colors">服务项目</a>
+                    <a href="https://space.bilibili.com/3546822953928942?spm_id_from=333.33.0.0" target="_blank" class="font-medium text-gray-700 hover:text-primary transition-colors">新闻动态</a>
+                    <a href="careers.html" class="font-medium text-gray-700 hover:text-primary transition-colors">招聘信息</a>
+                    <a href="contact.html" class="font-medium text-gray-700 hover:text-primary transition-colors">联系方式</a>
+                    <a href="index_en.html" class="ml-4 px-3 py-1 text-sm border border-primary text-primary rounded hover:bg-primary hover:text-white transition-colors">EN</a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <div class="flex items-center md:hidden">
+                    <a href="index_en.html" class="mr-4 px-3 py-1 text-sm border border-primary text-primary rounded hover:bg-primary hover:text-white transition-colors">EN</a>
+                    <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+                        <i class="fa fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 移动端菜单 -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white border-t z-50 absolute w-full left-0">
+                <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                    <a href="index.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">首页</a>
+                    <a href="about.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">公司简介</a>
+                    <a href="services.html" class="py-2 font-medium text-primary hover:text-accent transition-colors">服务项目</a>
+                    <a href="https://space.bilibili.com/3546822953928942?spm_id_from=333.33.0.0" target="_blank" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">新闻动态</a>
+                    <a href="careers.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">招聘信息</a>
+                    <a href="contact.html" class="py-2 font-medium text-gray-700 hover:text-primary transition-colors">联系方式</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- 解决方案Banner -->
+        <section id="solution-banner" class="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden z-10">
+            <div class="absolute inset-0 z-0">
+                <img src="https://picsum.photos/id/119/1920/1080" alt="智慧社区监控系统背景" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-security/80"></div>
+            </div>
+            <div class="container mx-auto px-4 z-20 relative">
+                <div class="max-w-3xl">
+                    <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-white mb-6 leading-tight text-shadow">
+                        智慧社区监控与<br>综合布线解决方案
+                    </h1>
+                    <p class="text-white/90 text-lg mb-8 max-w-2xl">
+                        构建安全、智能、高效的社区基础设施，通过先进的监控系统与结构化布线，为居民创造更安心的生活环境。
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#solution" class="px-8 py-3 bg-white text-security rounded-lg font-medium hover:bg-gray-100 transition-colors shadow-lg">
+                            了解解决方案
+                        </a>
+                        <a href="contact.html" class="px-8 py-3 bg-transparent border-2 border-white text-white rounded-lg font-medium hover:bg-white/10 transition-colors">
+                            咨询专家
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 核心优势 -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">核心优势</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">我们的智慧社区解决方案整合了先进的监控技术与结构化布线系统，为社区管理提供全方位支持</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- 优势1 -->
+                    <div class="hover-lift p-6 rounded-xl bg-light border border-gray-100">
+                        <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-5">
+                            <i class="fa fa-shield text-2xl text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">全方位安全防护</h3>
+                        <p class="text-gray-600">
+                            智能监控覆盖社区出入口、主干道、电梯等关键区域，实现24小时不间断安全防护。
+                        </p>
+                    </div>
+
+                    <!-- 优势2 -->
+                    <div class="hover-lift p-6 rounded-xl bg-light border border-gray-100">
+                        <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-5">
+                            <i class="fa fa-sitemap text-2xl text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">结构化布线系统</h3>
+                        <p class="text-gray-600">
+                            采用高品质综合布线方案，支持多系统集成，为社区智能化提供稳定的基础网络。
+                        </p>
+                    </div>
+
+                    <!-- 优势3 -->
+                    <div class="hover-lift p-6 rounded-xl bg-light border border-gray-100">
+                        <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-5">
+                            <i class="fa fa-bolt text-2xl text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">智能响应机制</h3>
+                        <p class="text-gray-600">
+                            异常情况自动识别与报警，联动安保系统快速响应，提升社区安全管理效率。
+                        </p>
+                    </div>
+
+                    <!-- 优势4 -->
+                    <div class="hover-lift p-6 rounded-xl bg-light border border-gray-100">
+                        <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-5">
+                            <i class="fa fa-expand text-2xl text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">可扩展架构设计</h3>
+                        <p class="text-gray-600">
+                            系统设计预留扩展空间，可根据社区发展需求，平滑升级新增功能模块。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 解决方案详情 -->
+        <section id="solution" class="py-16 bg-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">解决方案详情</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">我们提供从设计到实施的一站式智慧社区监控与综合布线服务</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+                    <div>
+                        <span class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">智慧监控系统</span>
+                        <h3 class="text-2xl font-bold mb-6">全高清智能监控网络</h3>
+                        <p class="text-gray-600 mb-6">
+                            构建覆盖社区全域的智能监控网络，结合AI识别技术，实现异常行为检测、陌生人识别、车辆管控等功能，大幅提升社区安全管理水平。
+                        </p>
+
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-start">
+                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-primary text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">高清智能摄像头</h4>
+                                    <p class="text-gray-600 text-sm">200万/400万像素高清摄像头，支持夜视、宽动态、智能分析功能</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-primary text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">智能分析平台</h4>
+                                    <p class="text-gray-600 text-sm">AI行为分析，支持异常行为检测、区域入侵报警、人员聚集预警</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-primary text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">集中管理系统</h4>
+                                    <p class="text-gray-600 text-sm">统一平台管理所有监控设备，支持远程查看、录像回放、事件追溯</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-primary text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">存储与备份方案</h4>
+                                    <p class="text-gray-600 text-sm">高性能NVR存储，支持RAID备份，录像保存时间可定制（30-90天）</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="contact.html" class="inline-flex items-center text-primary font-medium hover:text-accent transition-colors">
+                            了解更多监控系统细节 <i class="fa fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+
+                    <div class="relative">
+                        <img src="https://picsum.photos/id/628/800/600" alt="智慧社区监控系统示意图" class="w-full h-auto rounded-xl shadow-lg">
+                        <div class="absolute -bottom-6 -left-6 w-32 h-32 rounded-lg bg-white p-3 shadow-lg camera-pulse">
+                            <img src="https://picsum.photos/id/160/200/200" alt="智能摄像头特写" class="w-full h-full object-cover rounded">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="relative order-2 lg:order-1">
+                        <img src="https://picsum.photos/id/180/800/600" alt="社区综合布线系统示意图" class="w-full h-auto rounded-xl shadow-lg">
+                        <div class="absolute -top-6 -right-6 w-32 h-32 rounded-lg bg-white p-3 shadow-lg">
+                            <img src="https://picsum.photos/id/201/200/200" alt="网络布线细节" class="w-full h-full object-cover rounded">
+                        </div>
+                    </div>
+
+                    <div class="order-1 lg:order-2">
+                        <span class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">综合布线系统</span>
+                        <h3 class="text-2xl font-bold mb-6">结构化综合布线方案</h3>
+                        <p class="text-gray-600 mb-6">
+                            采用高品质线缆与配件，构建模块化、标准化的综合布线系统，支持数据、语音、视频等多种信号传输，为社区智能化提供坚实的网络基础。
+                        </p>
+
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-start">
+                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-primary text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">光纤主干网络</h4>
+                                    <p class="text-gray-600 text-sm">万兆光纤主干，支持大容量数据传输，满足未来5-10年带宽需求</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-primary text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">结构化布线设计</h4>
+                                    <p class="text-gray-600 text-sm">按工作区、配线子系统、干线子系统等进行规范设计，便于管理与维护</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-primary text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">多系统集成支持</h4>
+                                    <p class="text-gray-600 text-sm">支持监控、门禁、对讲、智能家居等多系统接入，实现资源共享</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-primary text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">冗余设计与保护</h4>
+                                    <p class="text-gray-600 text-sm">关键链路冗余设计，防鼠、防水、防火处理，确保系统稳定运行</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="contact.html" class="inline-flex items-center text-primary font-medium hover:text-accent transition-colors">
+                            了解更多布线方案细节 <i class="fa fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 系统功能模块 -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">系统功能模块</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">我们的解决方案包含多个功能模块，可根据社区需求灵活组合</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- 模块1 -->
+                    <div class="hover-lift bg-light rounded-xl overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/169/600/400" alt="出入口监控系统" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 flex items-center">
+                                <i class="fa fa-sign-in text-primary mr-2"></i>出入口监控系统
+                            </h3>
+                            <p class="text-gray-600 mb-4 text-sm">
+                                对社区大门、车库出入口等关键位置进行24小时监控，支持车牌识别、人脸识别，实现无接触出入管理。
+                            </p>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>人脸识别门禁</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>智能车牌识别</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>访客临时授权</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 模块2 -->
+                    <div class="hover-lift bg-light rounded-xl overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/429/600/400" alt="公共区域监控" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 flex items-center">
+                                <i class="fa fa-map-marker text-primary mr-2"></i>公共区域监控
+                            </h3>
+                            <p class="text-gray-600 mb-4 text-sm">
+                                覆盖社区道路、广场、绿化带等公共区域，实现异常行为检测、智能跟踪，提升社区整体安全水平。
+                            </p>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>智能行为分析</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>区域入侵报警</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>夜间智能监控</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 模块3 -->
+                    <div class="hover-lift bg-light rounded-xl overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/452/600/400" alt="楼宇内部监控" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 flex items-center">
+                                <i class="fa fa-building text-primary mr-2"></i>楼宇内部监控
+                            </h3>
+                            <p class="text-gray-600 mb-4 text-sm">
+                                针对单元门口、电梯轿厢、楼道等区域进行监控，结合楼宇对讲系统，保障居民居住安全。
+                            </p>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>电梯智能监控</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>单元门监控</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>楼宇对讲联动</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 模块4 -->
+                    <div class="hover-lift bg-light rounded-xl overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/119/600/400" alt="监控中心系统" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 flex items-center">
+                                <i class="fa fa-desktop text-primary mr-2"></i>监控中心系统
+                            </h3>
+                            <p class="text-gray-600 mb-4 text-sm">
+                                集中管理所有监控设备与报警信息，通过大屏显示、智能分析，实现社区安全状况全方位掌控。
+                            </p>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>大屏监控系统</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>智能报警处理</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>远程控制管理</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 模块5 -->
+                    <div class="hover-lift bg-light rounded-xl overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/201/600/400" alt="综合布线系统" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 flex items-center">
+                                <i class="fa fa-cubes text-primary mr-2"></i>综合布线系统
+                            </h3>
+                            <p class="text-gray-600 mb-4 text-sm">
+                                构建高性能网络传输平台，支持监控、通信、智能设备等多系统数据传输，为社区智能化提供基础支撑。
+                            </p>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>光纤主干网络</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>千兆到桌面</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>模块化配线架</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 模块6 -->
+                    <div class="hover-lift bg-light rounded-xl overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/366/600/400" alt="应急响应系统" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 flex items-center">
+                                <i class="fa fa-bell text-primary mr-2"></i>应急响应系统
+                            </h3>
+                            <p class="text-gray-600 mb-4 text-sm">
+                                整合各类报警信息，建立快速响应机制，通过声光报警、手机推送等方式，确保异常情况及时处理。
+                            </p>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>多渠道报警通知</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>应急处理流程</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa fa-circle text-primary text-xs mr-2"></i>
+                                    <span>事件处理记录</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 实施案例 -->
+        <section class="py-16 bg-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">成功案例</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">我们已为多个社区提供智慧监控与综合布线解决方案，获得客户一致好评</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    <!-- 案例1 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md hover-lift">
+                        <div class="grid grid-cols-1 md:grid-cols-3">
+                            <div class="md:col-span-1">
+                                <img src="https://picsum.photos/id/1048/400/600" alt="阳光花园社区案例" class="w-full h-full object-cover">
+                            </div>
+                            <div class="md:col-span-2 p-6">
+                                <div class="flex items-center mb-4">
+                                    <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full mr-3">大型社区</span>
+                                    <span class="text-gray-500 text-sm"><i class="fa fa-map-marker mr-1"></i> 北京 · 朝阳区</span>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3">阳光花园社区</h3>
+                                <p class="text-gray-600 mb-4 text-sm">
+                                    为3000户大型社区提供全套智慧监控与综合布线解决方案，覆盖15万平方米区域，实现全社区无死角监控与高速网络覆盖。
+                                </p>
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <div class="text-sm text-gray-500">摄像头数量</div>
+                                        <div class="font-bold">126个</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm text-gray-500">网络覆盖</div>
+                                        <div class="font-bold">全社区千兆</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm text-gray-500">实施周期</div>
+                                        <div class="font-bold">45天</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm text-gray-500">满意度</div>
+                                        <div class="font-bold">98%</div>
+                                    </div>
+                                </div>
+                                <a href="case-sunny-garden.html" class="text-primary font-medium hover:text-accent transition-colors text-sm flex items-center">
+                                    查看详细案例 <i class="fa fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 案例2 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md hover-lift">
+                        <div class="grid grid-cols-1 md:grid-cols-3">
+                            <div class="md:col-span-1">
+                                <img src="https://picsum.photos/id/1031/400/600" alt="山水家园社区案例" class="w-full h-full object-cover">
+                            </div>
+                            <div class="md:col-span-2 p-6">
+                                <div class="flex items-center mb-4">
+                                    <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full mr-3">高档小区</span>
+                                    <span class="text-gray-500 text-sm"><i class="fa fa-map-marker mr-1"></i> 北京 · 海淀区</span>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3">山水家园社区</h3>
+                                <p class="text-gray-600 mb-4 text-sm">
+                                    为1200户高档社区提供智能监控升级与综合布线改造，结合人脸识别、智能分析等技术，打造安全便捷的居住环境。
+                                </p>
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <div class="text-sm text-gray-500">摄像头数量</div>
+                                        <div class="font-bold">85个</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm text-gray-500">网络覆盖</div>
+                                        <div class="font-bold">万兆主干</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm text-gray-500">实施周期</div>
+                                        <div class="font-bold">30天</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm text-gray-500">满意度</div>
+                                        <div class="font-bold">96%</div>
+                                    </div>
+                                </div>
+                                <a href="case-landscape-home.html" class="text-primary font-medium hover:text-accent transition-colors text-sm flex items-center">
+                                    查看详细案例 <i class="fa fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 实施流程 -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">实施流程</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">我们采用标准化流程，确保项目高效实施与优质交付</p>
+                </div>
+
+                <div class="relative">
+                    <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 transform -translate-x-1/2"></div>
+                    
+                    <div class="space-y-12 md:space-y-0 relative">
+                        <!-- 步骤1 -->
+                        <div class="md:flex md:items-center md:justify-between">
+                            <div class="md:w-5/12 mb-6 md:mb-0 md:text-right">
+                                <h3 class="text-xl font-bold mb-2">需求分析与现场勘查</h3>
+                                <p class="text-gray-600">
+                                    深入了解社区需求，进行现场勘查，评估场地条件，确定监控点位与布线路由。
+                                </p>
+                            </div>
+                            <div class="md:w-2/12 flex justify-center">
+                                <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center relative z-10 shadow-lg">
+                                    <span class="font-bold">1</span>
+                                </div>
+                            </div>
+                            <div class="md:w-5/12"></div>
+                        </div>
+
+                        <!-- 步骤2 -->
+                        <div class="md:flex md:items-center md:justify-between">
+                            <div class="md:w-5/12"></div>
+                            <div class="md:w-2/12 flex justify-center">
+                                <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center relative z-10 shadow-lg">
+                                    <span class="font-bold">2</span>
+                                </div>
+                            </div>
+                            <div class="md:w-5/12 mt-6 md:mt-0">
+                                <h3 class="text-xl font-bold mb-2">方案设计与确认</h3>
+                                <p class="text-gray-600">
+                                    根据勘查结果设计详细解决方案，包括设备选型、点位布置、布线方案，提交客户确认。
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 步骤3 -->
+                        <div class="md:flex md:items-center md:justify-between">
+                            <div class="md:w-5/12 mb-6 md:mb-0 md:text-right">
+                                <h3 class="text-xl font-bold mb-2">材料采购与准备</h3>
+                                <p class="text-gray-600">
+                                    按照确认方案采购高品质设备与材料，进行进场前检测，确保符合设计要求。
+                                </p>
+                            </div>
+                            <div class="md:w-2/12 flex justify-center">
+                                <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center relative z-10 shadow-lg">
+                                    <span class="font-bold">3</span>
+                                </div>
+                            </div>
+                            <div class="md:w-5/12"></div>
+                        </div>
+
+                        <!-- 步骤4 -->
+                        <div class="md:flex md:items-center md:justify-between">
+                            <div class="md:w-5/12"></div>
+                            <div class="md:w-2/12 flex justify-center">
+                                <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center relative z-10 shadow-lg">
+                                    <span class="font-bold">4</span>
+                                </div>
+                            </div>
+                            <div class="md:w-5/12 mt-6 md:mt-0">
+                                <h3 class="text-xl font-bold mb-2">现场施工与安装</h3>
+                                <p class="text-gray-600">
+                                    专业施工团队进行设备安装与布线施工，严格遵循施工规范，确保工程质量。
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 步骤5 -->
+                        <div class="md:flex md:items-center md:justify-between">
+                            <div class="md:w-5/12 mb-6 md:mb-0 md:text-right">
+                                <h3 class="text-xl font-bold mb-2">系统调试与测试</h3>
+                                <p class="text-gray-600">
+                                    完成设备安装后进行系统调试，全面测试各项功能，确保系统稳定运行。
+                                </p>
+                            </div>
+                            <div class="md:w-2/12 flex justify-center">
+                                <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center relative z-10 shadow-lg">
+                                    <span class="font-bold">5</span>
+                                </div>
+                            </div>
+                            <div class="md:w-5/12"></div>
+                        </div>
+
+                        <!-- 步骤6 -->
+                        <div class="md:flex md:items-center md:justify-between">
+                            <div class="md:w-5/12"></div>
+                            <div class="md:w-2/12 flex justify-center">
+                                <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center relative z-10 shadow-lg">
+                                    <span class="font-bold">6</span>
+                                </div>
+                            </div>
+                            <div class="md:w-5/12 mt-6 md:mt-0">
+                                <h3 class="text-xl font-bold mb-2">验收培训与交付</h3>
+                                <p class="text-gray-600">
+                                    组织项目验收，对社区管理人员进行操作培训，提供完整技术文档，完成项目交付。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 客户评价 -->
+        <section class="py-16 bg-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">客户评价</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">听听我们的客户怎么说</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 评价1 -->
+                    <div class="hover-lift bg-white p-6 rounded-xl shadow-sm">
+                        <div class="text-yellow-400 mb-4">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <p class="text-gray-600 mb-6 italic">
+                            "愉佚科技为我们社区设计的智慧监控系统非常出色，安装后社区安全状况明显改善，居民安全感大幅提升。系统操作简单，维护也很方便。"
+                        </p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                                <img src="https://picsum.photos/id/1012/100/100" alt="客户头像" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold">王经理</h4>
+                                <p class="text-gray-500 text-sm">阳光花园物业总监</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 评价2 -->
+                    <div class="hover-lift bg-white p-6 rounded-xl shadow-sm">
+                        <div class="text-yellow-400 mb-4">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <p class="text-gray-600 mb-6 italic">
+                            "综合布线系统质量非常好，网络稳定性比以前提升很多，不仅满足了监控需求，也为我们后续引入智能家居系统奠定了基础，值得推荐。"
+                        </p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                                <img src="https://picsum.photos/id/1025/100/100" alt="客户头像" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold">李主任</h4>
+                                <p class="text-gray-500 text-sm">山水家园业委会</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 评价3 -->
+                    <div class="hover-lift bg-white p-6 rounded-xl shadow-sm">
+                        <div class="text-yellow-400 mb-4">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                        </div>
+                        <p class="text-gray-600 mb-6 italic">
+                            "从方案设计到施工交付，愉佚科技团队都展现了专业素养，施工规范，进度把控到位，遇到问题能及时沟通解决，合作非常愉快。"
+                        </p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                                <img src="https://picsum.photos/id/1027/100/100" alt="客户头像" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold">张总</h4>
+                                <p class="text-gray-500 text-sm">恒基房地产开发</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 咨询区域 -->
+        <section class="py-16 bg-gradient-to-r from-security to-primary text-white">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-6">打造安全智能的社区环境</h2>
+                    <p class="mb-10 text-white/90 max-w-2xl mx-auto">
+                        无论您是新建社区还是老旧社区改造，我们都能为您提供量身定制的智慧监控与综合布线解决方案，提升社区安全管理水平。
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <a href="contact.html" class="px-8 py-3 bg-white text-security rounded-lg font-medium hover:bg-gray-100 transition-colors shadow-lg">
+                            免费咨询方案
+                        </a>
+                        <a href="tel:010-82721226" class="px-8 py-3 bg-transparent border-2 border-white text-white rounded-lg font-medium hover:bg-white/10 transition-colors flex items-center">
+                            <i class="fa fa-phone mr-2"></i> 立即电话咨询
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="footer" class="bg-dark text-white pt-16 pb-8 relative z-20">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">北京愉佚科技</h3>
+                        <p class="text-gray-400 mb-4">
+                            致力于科技推广和应用服务业，提供全面的技术支持和服务。
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fa fa-weixin text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fa fa-weibo text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fa fa-linkedin text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">快速链接</h3>
+                        <ul class="space-y-2">
+                            <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">首页</a></li>
+                            <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">公司简介</a></li>
+                            <li><a href="services.html" class="text-gray-400 hover:text-white transition-colors">服务项目</a></li>
+                            <li><a href="careers.html" class="text-gray-400 hover:text-white transition-colors">招聘信息</a></li>
+                            <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors">联系方式</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">联系我们</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-start">
+                                <i class="fa fa-map-marker mt-1 mr-3 text-gray-400"></i>
+                                <span class="text-gray-400">北京市朝阳区科技园区88号</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-phone mr-3 text-gray-400"></i>
+                                <span class="text-gray-400">010-82721226</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-envelope mr-3 text-gray-400"></i>
+                                <span class="text-gray-400">contact@pleasantteches.com</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">订阅资讯</h3>
+                        <p class="text-gray-400 mb-4">订阅我们的新闻资讯，了解最新动态</p>
+                        <form class="flex relative z-30">
+                            <input type="email" placeholder="您的邮箱地址" class="px-4 py-2 rounded-l-lg w-full focus:outline-none text-dark shadow-sm">
+                            <button type="submit" class="bg-primary hover:bg-primary/90 px-4 py-2 rounded-r-lg transition-colors shadow-sm">
+                                <i class="fa fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+                    <ul class="copyright">
+                        <li>© 北京愉佚科技发展有限公司 2025</li>
+                        <li class="mt-1">© PleasantTech Ventures Co., Ltd. 2025</li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // 移动端菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            const topNotice = document.querySelector('.bg-primary.text-white');
+            const topNoticeHeight = topNotice ? topNotice.offsetHeight : 0;
+
+            header.style.top = topNoticeHeight + 'px';
+
+            if (window.scrollY > topNoticeHeight) {
+                header.style.top = '0';
+                header.classList.add('py-2', 'shadow');
+                header.classList.remove('py-3');
+            } else {
+                header.classList.add('py-3');
+                header.classList.remove('py-2', 'shadow');
+            }
+        });
+
+        // 页面加载时触发滚动事件
+        window.addEventListener('load', function() {
+            window.dispatchEvent(new Event('scroll'));
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+
+        // 页面元素淡入动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('section > div.container > div:not(.text-center)');
+            fadeElements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                
+                // 为元素添加可见性检测
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => {
+                                el.style.opacity = '1';
+                                el.style.transform = 'translateY(0)';
+                            }, 100 + (index * 100));
+                            observer.unobserve(el);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                observer.observe(el);
+            });
+        });
+    </script>
+
+</body>
+</html>
